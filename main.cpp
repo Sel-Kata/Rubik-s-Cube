@@ -73,23 +73,22 @@ public:
         }
         return true;
     }
-
-    bool operator != (const Cube& other){
-        return !(this->operator==(other));
-    }
-
     Cube& operator = (const Cube& other){
         for (int i = 0; i < 3; ++i){
             for (int j = 0; j < 3; ++j){
                 set_front(i, j, other.front_[i][j]);
-                set_back(i, j, other.back_[i][j]);
                 set_right(i, j, other.right_[i][j]);
+                set_back(i, j, other.back_[i][j]);
                 set_left(i, j, other.left_[i][j]);
-                set_up(i, j, other.up_[i][j]);
                 set_down(i, j, other.down_[i][j]);
+                set_up(i, j, other.up_[i][j]);
             }
         }
         return *this;
+    }
+
+    bool operator != (const Cube& other){
+        return !(this->operator==(other));
     }
 
     Cube(){
@@ -104,10 +103,11 @@ public:
             for (int j = 0; j < 3; ++j){
                 set_front(i, j, front[i][j]);
                 set_back(i, j, back[i][j]);
-                set_right(i, j, right[i][j]);
-                set_left(i, j, left[i][j]);
                 set_up(i, j, up[i][j]);
                 set_down(i, j, down[i][j]);
+                set_right(i, j, right[i][j]);
+                set_left(i, j, left[i][j]);
+                
             }
         }
     }
