@@ -2,7 +2,8 @@
 #include <vector>
 #include <string>
 #include <queue>
-#include <set>
+#include <fstream>
+#include <algorithm>
 
 // 1 - Белый, 2 - Жёлтый, 3 - Розовый, 4 - Зелёный, 5 - Ораньжевый, 6 - Синий
 
@@ -107,7 +108,7 @@ public:
                 set_down(i, j, down[i][j]);
                 set_right(i, j, right[i][j]);
                 set_left(i, j, left[i][j]);
-                
+
             }
         }
     }
@@ -127,7 +128,7 @@ public:
 
     void right_rotation_up(){
         int up1[3], up2[3], back1[3], back2[3], down1[3], down2[3], front1[3], front2[3];
-        
+
         for (int i = 0; i < 3; ++i){
             up1[i] = get_up(i, 2);
             back1[i] = get_back(i, 2);
@@ -265,7 +266,7 @@ public:
             back2[i] = get_down(2, i);
             left2[i] = get_down(i, 0);
         }
-        
+
         int front3[3], right3[3], back3[3], left3[3];
         int counter = 2;
 
@@ -380,8 +381,8 @@ public:
         this->back_rotation_right();
         this->back_rotation_right();
     }
-    
-    
+
+
     bool side_completed(int side[3][3]){
         for(int i = 0; i < 3; ++i){
             for (int j = 0; j < 3; ++j){
@@ -412,7 +413,7 @@ public:
             return false;
         return true;
     }
-    
+
 
     void random_generation(){
         int run = 5;
@@ -455,6 +456,46 @@ public:
                     break;
                 case 11:
                     this->front_rotation_right();
+            }
+        }
+    }
+    void read(std::string rotations, std::string file_name){
+        std::string str;
+
+        std::ifstream in(file_name);
+        while (getline(in, str))
+            rotations += str;
+
+        while (rotations != "\0"){
+            if (rotations[1] == ' '){
+                if (rotations[0] == 'R')
+                    right_rotation_up();
+                else if (rotations[0] == 'L')
+                    left_rotation_up();
+                else if (rotations[0] == 'F')
+                    front_rotation_right();
+                else if (rotations[0] == 'B')
+                    back_rotation_right();
+                else if (rotations[0] == 'U')
+                    up_rotation_right();
+                else if (rotations[0] == 'D')
+                    down_rotation_right();
+                rotations.erase(rotations.begin(), rotations.begin() + 2);
+            }
+            else {
+                if (rotations[0] == 'R')
+                    right_rotation_down();
+                else if (rotations[0] == 'L')
+                    left_rotation_down();
+                else if (rotations[0] == 'F')
+                    front_rotation_left();
+                else if (rotations[0] == 'B')
+                    back_rotation_left();
+                else if (rotations[0] == 'U')
+                    up_rotation_left();
+                else if (rotations[0] == 'D')
+                    down_rotation_left();
+                rotations.erase(rotations.begin(), rotations.begin() + 3);
             }
         }
     }
@@ -508,7 +549,7 @@ std::string getting_ways(Cube cub){
         rotate_cube = the_first_queue.front();
         the_first_queue.pop();
         the_first_set_way.push_back("");
-        
+
         rotate_cube.right_rotation_up();
         the_first_queue.push(rotate_cube);
         the_first_set.push_back(rotate_cube);
@@ -593,7 +634,7 @@ std::string getting_ways(Cube cub){
             the_second_set.push_back(rotate_cube);
             the_second_set_way.push_back(the_second_set_way[counter] + "=r_r_u=");
             rotate_cube.right_rotation_up();
-            
+
             rotate_cube.left_rotation_up();
             the_second_queue.push(rotate_cube);
             the_second_set.push_back(rotate_cube);
@@ -672,7 +713,7 @@ void assembling(Cube& cub){//сборка
     }
 
     std::cout << way << std::endl;
-    
+
     for (int i = 0; i < way.size(); i += 7)
     {
         switch (way[i + 1]) {
@@ -763,22 +804,24 @@ int main(){
 
 
 
-    //cub.front_rotation_right();
-    //cub.back_rotation_right();
-    //cub.down_rotation_right();
-    cub.right_rotation_up();
+    cub.front_rotation_right();
+    cub.back_rotation_right();
+    cub.down_rotation_right();
+    //cub.right_rotation_up();
 
 
     std::cout << cub << "\n\n";
 
     //cub.right_rotation_up();
-    cub.right_rotation_up();
+    //cub.right_rotation_up();
     cub.back_rotation_left();
 
     assembling(cub);
+    //std::string rotations, str;
+    //cub.read(rotations, "cube.txt");
 
-    std::cout << cub << "\n\n";
+    //std::cout << cub << "\n\n";
 
     //std::cout << cub.down_cross_completed() << "\n\n";
-    
+
 }
