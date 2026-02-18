@@ -1,7 +1,4 @@
 # cub
-лабораторная 4 семестр 2
+The program solves a disassembled Rubik's cube. The cube's state is fed as input, and the program outputs the path (the steps needed to solve the current cube).
 
-Программа собирает разобраный кубик-рубик. На вход подается состояние кубика, на выход программа напишет путь(действия которые надо сделать чтоб собрать текущий кубик)
-
-Программа не использует сборку алгоритмом, а идет двумя BFS. Один поиск в длубину идет из разобраного состояния, а другой из собраного(они идут друг другу на встречу). Как только состоянии совпадут(пересекутся вершины) программа выведет совпавший путь(путь из BFS разобраного + путь из BFS собраного).
-Используя два BFS у нас минимально затрачивается память и время.
+The program doesn't use an algorithm for solving, but uses two BFSs. One search is performed from the disassembled state, and the other from the assembled state (they move toward each other). Once the states match (the vertices intersect), the program outputs the matching path (the path from the disassembled BFS + the path from the assembled BFS). Using two BFSs minimizes memory and time consumption.
